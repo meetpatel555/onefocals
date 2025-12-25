@@ -40,7 +40,7 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
-<footer id="site-footer" role="contentinfo" style="background-color: #fff5ee; border-top: 1px solid #eee; padding-top: 50px;">
+<footer id="site-footer" role="contentinfo" style="background-color: #f0f8ff; border-top: 1px solid #bfd7ed; padding-top: 50px;">
     <div class="wrapper footer-wrapper" style="display: flex; flex-wrap: wrap; justify-content: space-between; padding-bottom: 50px;">
         
         <!-- Col 1 -->
@@ -75,11 +75,11 @@ document.addEventListener('click', function(e) {
         <div class="footer-col" style="flex: 1; min-width: 200px; margin-bottom: 20px;">
             <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">Connect</h3>
             <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; margin-bottom: 20px;">
-                <li><a href="#" style="text-decoration: none; color: #ea988e;"><i class="fab fa-facebook-f" style="width:20px;"></i> Facebook</a></li>
-                <li><a href="#" style="text-decoration: none; color: #ea988e;"><i class="fab fa-twitter" style="width:20px;"></i> Twitter</a></li>
-                <li><a href="#" style="text-decoration: none; color: #ea988e;"><i class="fab fa-linkedin-in" style="width:20px;"></i> Linkedin</a></li>
-                <li><a href="#" style="text-decoration: none; color: #ea988e;"><i class="fab fa-instagram" style="width:20px;"></i> Instagram</a></li>
-                <li><a href="#" style="text-decoration: none; color: #ea988e;"><i class="fab fa-youtube" style="width:20px;"></i> Youtube</a></li>
+                <li><a href="#" style="text-decoration: none; color: #061e47;"><i class="fab fa-facebook-f" style="width:20px;"></i> Facebook</a></li>
+                <li><a href="#" style="text-decoration: none; color: #061e47;"><i class="fab fa-twitter" style="width:20px;"></i> Twitter</a></li>
+                <li><a href="#" style="text-decoration: none; color: #061e47;"><i class="fab fa-linkedin-in" style="width:20px;"></i> Linkedin</a></li>
+                <li><a href="#" style="text-decoration: none; color: #061e47;"><i class="fab fa-instagram" style="width:20px;"></i> Instagram</a></li>
+                <li><a href="#" style="text-decoration: none; color: #061e47;"><i class="fab fa-youtube" style="width:20px;"></i> Youtube</a></li>
             </ul>
         </div>
 
@@ -89,7 +89,7 @@ document.addEventListener('click', function(e) {
             <p style="margin-bottom: 20px; color: #666;">Sign up to get the latest on products, styling and events</p>
             <form style="display: flex; gap: 0; margin-bottom: 30px;">
                 <input type="email" placeholder="email@example.com" style="padding: 10px; border: 1px solid #ddd; flex-grow: 1; border-radius: 4px 0 0 4px;">
-                <button type="submit" style="padding: 10px 20px; background: #ea988e; color: #fff; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">Sign Up</button>
+                <button type="submit" style="padding: 10px 20px; background: #bfd7ed; color: #061e47; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold;">Sign Up</button>
             </form>
             <!-- Logo -->
             <div style="text-align: center; margin-top:20px;">
@@ -100,12 +100,12 @@ document.addEventListener('click', function(e) {
     </div>
 
     <!-- Bottom Bar -->
-    <div class="site-info" style="background-color: #ea988e; color: #fff; padding: 15px 0; font-size: 14px;">
+    <div class="site-info" style="background-color: #bfd7ed; color: #061e47; padding: 15px 0; font-size: 14px;">
         <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center;">
 
             <!-- Copyright Only -->
              <div class="copyright" style="width: 100%; text-align: center;">
-                © 2023 - OneFocals - Design & Developed by <strong style="color: #fff;">Omegathemes</strong>
+                © 2023 - OneFocals - Design & Developed by <strong style="color: #061e47;">Omegathemes</strong>
             </div>
         </div>
     </div>

@@ -1,0 +1,105 @@
+/* Hide Header and Footer on Login Page for Logged Out Users */
+body.woocommerce-account:not(.logged-in) .crash-header-container,
+body.woocommerce-account:not(.logged-in) #site-footer,
+body.woocommerce-account:not(.logged-in) #page-loader,
+body.woocommerce-account:not(.logged-in) header#masthead {
+    display: none !important;
+}
+
+body.woocommerce-account:not(.logged-in) #omega-jewelry-store-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Centers if it fits */
+    align-items: center;
+    background: #f0f8ff;
+    padding: 60px 0;
+    /* Vertical padding prevents edge touching on small screens/tall forms */
+    box-sizing: border-box;
+}
+
+/* Ensure the content div expands */
+body.woocommerce-account:not(.logged-in) .site-content {
+    width: 100%;
+    margin-top: 0 !important;
+    /* Override theme margins */
+    margin-bottom: 0 !important;
+}
+
+body.woocommerce-account:not(.logged-in) .woocommerce {
+    max-width: 500px;
+    /* Reduced width for a cleaner login card */
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Login Page Toggle Styling */
+
+
+/* Hide the registration form by default, show logic is handled by JS toggle */
+body.woocommerce-account .u-column2.col-2 {
+    display: none;
+}
+
+/* Ensure Login form (col-1) takes full width of the container */
+body.woocommerce-account .u-column1.col-1,
+body.woocommerce-account .u-column2.col-2 {
+    width: 100% !important;
+    float: none !important;
+    margin: 0 auto;
+    padding-right: 0;
+}
+
+/* Style the "Sign Up" button on the Login form */
+.omega-toggle-signup-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    background: transparent;
+    border: 2px solid #061e47;
+    color: #061e47;
+    padding: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.omega-toggle-signup-btn:hover {
+    background: #061e47;
+    color: #fff;
+}
+
+/* Style "Back to Login" on Register Form */
+.omega-toggle-login-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Form Headings */
+body.woocommerce-account h2 {
+    text-align: center;
+    color: #061e47;
+    margin-bottom: 20px;
+}
+
+/* Site Logo on Login Page */
+.omega-login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.omega-login-logo img {
+    max-width: 200px;
+    height: auto;
+}

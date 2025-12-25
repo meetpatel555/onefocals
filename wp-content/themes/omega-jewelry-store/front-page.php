@@ -5,10 +5,10 @@ get_header();
 <style>
 /* Crashas Home Styles */
 :root {
-    --crashas-red: #ea988e;
-    --crashas-salmon: #f9b6ae;
-    --crashas-bg-light: #ffece6; 
-    --crashas-text: #333;
+    --crashas-red: #bfd7ed;
+    --crashas-salmon: #bfd7ed;
+    --crashas-bg-light: #e3f2fd; /* Light blue background for hero */
+    --crashas-text: #061e47;
 }
 
 /* 1. Hero Slider */
@@ -143,7 +143,7 @@ get_header();
 .crashas-about h2 {
     font-size: 32px;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--crashas-text);
 }
 .crashas-about p {
     max-width: 600px;
@@ -185,7 +185,7 @@ get_header();
 
 /* 5. Newsletter Banner */
 .crashas-newsletter {
-    background-color: #f9b6ae; /* Pink/Salmon */
+    background-color: var(--crashas-salmon); /* Theme Blue */
     padding: 80px 0;
     position: relative;
     overflow: hidden;

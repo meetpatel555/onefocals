@@ -1,0 +1,93 @@
+/* My Account Navigation & Dashboard Styling */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+    margin-bottom: 20px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    /* Removed existing border */
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+    border: none;
+    /* Removed existing box border */
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+    display: block;
+    padding: 10px 0;
+    color: var(--crashas-text, #061e47);
+    /* Use theme dark blue */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    /* Divider */
+    transition: color 0.3s;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a:hover {
+    color: var(--crashas-salmon, #bfd7ed);
+    /* Theme accent color */
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
+    font-weight: 700;
+    color: var(--crashas-text, #061e47);
+    /* Keep it dark or make it accent? Screenshot shows normal text */
+}
+
+/* Add icons via pseudo elements (optional, but requested by "clean text list") */
+/* You might want to add specific icons per menu item if needed, but for now simple text is cleaner than boxes */
+
+
+/* Dashboard Content Container */
+.omega-dashboard-container {
+    border: 2px solid #061e47 !important;
+    /* Theme Dark Blue Border */
+    padding: 0;
+    /* Header and Content handle padding */
+    background: #fff;
+    border-radius: 4px;
+    /* Optional rounded corners */
+    overflow: hidden;
+}
+
+.omega-dashboard-header {
+    background: #fff;
+    /* Basic white header */
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.omega-dashboard-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #061e47;
+    /* Theme Dark Blue Title */
+    font-weight: 700;
+}
+
+.omega-dashboard-content {
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.omega-dashboard-content p {
+    margin-bottom: 15px;
+}
+
+.omega-dashboard-content a {
+    color: #061e47;
+    text-decoration: underline;
+}
+
+.omega-dashboard-content strong {
+    color: #000;
+}

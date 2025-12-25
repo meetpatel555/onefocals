@@ -15,9 +15,9 @@ if ($omega_jewelry_store_sticky) {
 <style>
 /* Crashas Style Header CSS */
 :root {
-    --crashas-red: #ea988e; /* Top banner */
-    --crashas-salmon: #f9b6ae; /* Info bar */
-    --crashas-text: #333;
+    --crashas-red: #bfd7ed; /* Replaced pink */
+    --crashas-salmon: #bfd7ed; /* Replaced salmon */
+    --crashas-text: #061e47;
     --crashas-white: #ffffff;
 }
 .crash-header-container {
@@ -28,7 +28,7 @@ if ($omega_jewelry_store_sticky) {
 /* Tier 1: Red Banner (Existing) */
 #top-header {
     background-color: var(--crashas-red);
-    color: var(--crashas-white);
+    color: var(--crashas-text);
     padding: 8px 0;
     text-align: center;
     font-size: 13px;
@@ -48,7 +48,7 @@ if ($omega_jewelry_store_sticky) {
 /* Tier 2: Info Bar (Salmon) */
 .crash-info-bar {
     background-color: var(--crashas-salmon);
-    color: var(--crashas-white);
+    color: var(--crashas-text);
     padding: 10px 0;
     font-size: 13px;
     font-weight: 500;
@@ -59,7 +59,7 @@ if ($omega_jewelry_store_sticky) {
     align-items: center;
 }
 .crash-social-icons a {
-    color: #fff;
+    color: var(--crashas-text);
     margin-right: 15px;
     text-decoration: none;
     font-size: 14px;
@@ -72,7 +72,7 @@ if ($omega_jewelry_store_sticky) {
     letter-spacing: 0.5px;
 }
 .crash-email-link {
-    color: #fff;
+    color: var(--crashas-text);
     text-decoration: none;
 }
 
@@ -84,10 +84,11 @@ if ($omega_jewelry_store_sticky) {
 }
 .crash-main-header .wrapper {
     display: flex;
-    justify-content: flex-end; /* Icons to right */
+    justify-content: space-between;
     align-items: center;
-    position: relative; /* Center logo absolute */
+    position: relative;
     min-height: 50px;
+    padding: 0 20px;
 }
 .crash-selectors {
     display: none;
@@ -99,12 +100,11 @@ if ($omega_jewelry_store_sticky) {
     gap: 5px;
 }
 .crash-logo {
-    position: absolute;
-    left: 15%;
-    top: 67%;
-    transform: translate(-50%, -50%);
+    margin-top: 15px !important;
+    /* position: relative;
     text-align: center;
-    z-index: 10;
+    z-index: 10; */ 
+    margin-right: 20px;
 }
 .crash-logo img {
     max-height: 60px !important;
@@ -116,7 +116,7 @@ if ($omega_jewelry_store_sticky) {
     margin: 0;
     /* font-family: 'Brush Script MT', cursive; */
     font-size: 32px;
-    color: #333;
+    color: var(--crashas-text);
 }
 .crash-user-icons {
     display: flex;
@@ -124,15 +124,16 @@ if ($omega_jewelry_store_sticky) {
     align-items: center;
 }
 .crash-user-icons a {
-    color: #333;
+    color: var(--crashas-text);
     font-size: 18px;
     text-decoration: none;
 }
 
-/* Tier 4: Navigation (White) */
-.crash-nav-bar {
-    background: #fff;
-    padding: 0;
+/* Tier 4: Navigation (Moved to Main) */
+.crash-nav-menu {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 .crash-nav-bar .wrapper {
     display: flex;
@@ -153,7 +154,7 @@ if ($omega_jewelry_store_sticky) {
 }
 .crash-nav-menu ul li a {
     text-decoration: none;
-    color: #333;
+    color: var(--crashas-text);
     text-transform: capitalize;
     font-weight: 500;
     font-size: 15px;
@@ -243,7 +244,7 @@ if ($omega_jewelry_store_sticky) {
     </div>
 
     <!-- Tier 3: Main Header (White) -->
-    <div class="crash-main-header">
+    <div class="crash-main-header" data-sticky="<?php echo esc_attr($omega_jewelry_store_data_sticky); ?>">
         <div class="wrapper">
             <!-- Center: Logo -->
             <div class="crash-logo">
@@ -252,38 +253,8 @@ if ($omega_jewelry_store_sticky) {
                 ?>
             </div>
 
-            <!-- Right: Icons -->
-            <div class="crash-user-icons">
-                <a href="#" title="Search"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
-                <a href="#" title="Wishlist"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></a>
-                
-                <?php if ( is_user_logged_in() ) { ?>
-                    <a href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>" title="My Account"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
-                <?php } else { ?>
-                    <a href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>" title="Login"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
-                <?php } ?>
-
-                <a href="<?php if(function_exists('wc_get_cart_url')){ echo esc_url(wc_get_cart_url()); } ?>" title="Cart" class="omega-cart-link">
-                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span class="omega-cart-count" style="font-size:11px; vertical-align:top;">
-                        <?php 
-                        if(class_exists('woocommerce')) {
-                            $count = WC()->cart->get_cart_contents_count();
-                            echo ($count > 0) ? '(' . $count . ')' : '';
-                        }
-                        ?>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tier 4: Navigation -->
-    <nav class="crash-nav-bar" data-sticky="<?php echo esc_attr($omega_jewelry_store_data_sticky); ?>">
-        <div class="wrapper">
             <div class="crash-nav-menu">
                 <ul>
-                    <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a></li>
                     <li>
                         <a href="#">Rings <span style="font-size:10px;">▼</span></a>
                         <ul class="sub-menu">
@@ -341,8 +312,33 @@ if ($omega_jewelry_store_sticky) {
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
-            
+
+            <!-- Right: Icons -->
+            <div class="crash-user-icons">
+                <a href="#" title="Search"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
+                <a href="#" title="Wishlist"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></a>
+                
+                <?php if ( is_user_logged_in() ) { ?>
+                    <a href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>" title="My Account"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+                <?php } else { ?>
+                    <a href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>" title="Login"><svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+                <?php } ?>
+
+                <a href="<?php if(function_exists('wc_get_cart_url')){ echo esc_url(wc_get_cart_url()); } ?>" title="Cart" class="omega-cart-link">
+                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span class="omega-cart-count" style="font-size:11px; vertical-align:top;">
+                        <?php 
+                        if(class_exists('woocommerce')) {
+                            $count = WC()->cart->get_cart_contents_count();
+                            echo ($count > 0) ? '(' . $count . ')' : '';
+                        }
+                        ?>
+                    </span>
+                </a>
+            </div>
         </div>
-    </nav>
+    </div>
+
+
 
 </div>

@@ -126,7 +126,9 @@ function omega_jewelry_store_register_styles() {
     wp_enqueue_style( 'swiper', get_template_directory_uri() . '/lib/swiper/css/swiper-bundle.min.css');
 	wp_enqueue_style( 'omega-jewelry-store-style', get_stylesheet_uri(), array(), $omega_jewelry_store_theme_version );
 
-	wp_enqueue_style( 'omega-jewelry-store-style', get_stylesheet_uri() );
+    wp_enqueue_style( 'omega-jewelry-store-style', get_stylesheet_uri() );
+    wp_enqueue_style( 'omega-my-account-custom', get_template_directory_uri() . '/css/my-account-custom.css', array(), '1.0' );
+    wp_enqueue_style( 'omega-login-page-custom', get_template_directory_uri() . '/css/login-page.css', array(), '1.0' );
 	require get_parent_theme_file_path( '/custom_css.php' );
 	wp_add_inline_style( 'omega-jewelry-store-style',$omega_jewelry_store_custom_css );
 
@@ -355,6 +357,31 @@ function cw_auto_create_about_page() {
     }
 }
 
+// Auto-create Login Page and Set as My Account
+add_action( 'init', 'omega_setup_login_page' );
+function omega_setup_login_page() {
+    $page_slug = 'login';
+    $page = get_page_by_path( $page_slug );
+    if ( ! $page ) {
+        $page_id = wp_insert_post( array(
+            'post_title'    => 'Login',
+            'post_name'     => $page_slug,
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_content'  => '[woocommerce_my_account]',
+        ) );
+        if ( $page_id ) {
+             update_option( 'woocommerce_myaccount_page_id', $page_id );
+             flush_rewrite_rules();
+        }
+    } else {
+        // Ensure it is set as the account page
+        if ( get_option( 'woocommerce_myaccount_page_id' ) != $page->ID ) {
+             update_option( 'woocommerce_myaccount_page_id', $page->ID );
+        }
+    }
+}
+
 
 
 /** AJAX LOGIN HANDLER */
@@ -470,15 +497,16 @@ add_action( 'woocommerce_after_cart_table', 'omega_cart_trust_badges' );
 /** Handle Custom Registration Fields & Logic */
 
 /** 1. Global Redirect to Login/My Account */
+/** 1. Global Redirect to Login/My Account */
 function omega_redirect_home_to_login() {
-    // If user is not logged in AND checks if we are NOT on my account page
+    // If user is not logged in AND we are NOT on my account page
     // We allow access only to My Account page so they can login/register
     if ( ! is_user_logged_in() && ! is_account_page() ) {
         wp_redirect( get_permalink( get_option('woocommerce_myaccount_page_id') ) );
         exit;
     }
 }
-add_action( 'template_redirect', 'omega_redirect_home_to_login' );
+add_action( 'template_redirect', 'omega_redirect_home_to_login', 1 );
 
 
 /** 2. Validate Custom Fields */
@@ -562,4 +590,134 @@ function omega_custom_login_redirect( $redirect, $user ) {
     return home_url();
 }
 add_filter( 'woocommerce_login_redirect', 'omega_custom_login_redirect', 10, 2 );
-add_filter( 'woocommerce_registration_redirect', 'omega_custom_login_redirect', 10, 2 );
+
+/**
+ * Add Scripts for Login/Register Toggle
+ */
+add_action( 'wp_footer', 'omega_login_page_scripts' );
+function omega_login_page_scripts() {
+    if ( is_account_page() && ! is_user_logged_in() ) {
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+            // Check if there are any error messages. If so, and they are related to registration, show register form.
+            var hasError = $('.woocommerce-error').length > 0;
+            var regError = false;
+            // Rough check if error text contains phrases relevant to registration
+            if(hasError) {
+                var errorText = $('.woocommerce-error').text().toLowerCase();
+                if(errorText.includes('email') || errorText.includes('password') || errorText.includes('register') || errorText.includes('business')) {
+                     // Since login/register both use email/pass, this is tricky.
+                     // But Standard Woo structure: Login is .col-1, Register is .col-2.
+                     // Often errors are displayed at the top.
+                     // If we want to be persistent, we can check URL params or cookies if needed.
+                     // For now, default to Login unless we specifically trigger Register.
+                }
+            }
+
+            // Inject "Sign Up" button into Login form
+            $('.u-column1.col-1 form.woocommerce-form-login').append('<button type="button" class="omega-toggle-signup-btn">Sign Up</button>');
+            
+            // Inject "Back to Login" into Register form
+            $('.u-column2.col-2 form.woocommerce-form-register').append('<a class="omega-toggle-login-btn">Back to Login</a>');
+
+            // Handle Clicks
+            $(document).on('click', '.omega-toggle-signup-btn', function(e) {
+                e.preventDefault();
+                $('.u-column1.col-1').hide();
+                $('.u-column2.col-2').fadeIn();
+                $('h2').text('Register'); // Update header title if single H2 exists
+            });
+
+            $(document).on('click', '.omega-toggle-login-btn', function(e) {
+                e.preventDefault();
+                $('.u-column2.col-2').hide();
+                $('.u-column1.col-1').fadeIn();
+                $('h2').text('Login');
+            });
+            
+            // If the URL has ?action=register (optional enhancement), show register
+            if (window.location.search.indexOf('action=register') > -1) {
+                 $('.u-column1.col-1').hide();
+                 $('.u-column2.col-2').show();
+            }
+
+        });
+        </script>
+        <?php
+    }
+}
+
+/** 
+ * Add Logo to Login Page 
+ */
+add_action( 'woocommerce_before_customer_login_form', 'omega_login_page_logo' );
+function omega_login_page_logo() {
+    ?>
+    <div class="omega-login-logo">
+        <?php 
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+        if ( has_custom_logo() ) {
+            echo '<img src="' . esc_url( $logo[0] ) . '" alt="' . get_bloginfo( 'name' ) . '">';
+        } else {
+            // Fallback to theme logo or text
+             echo '<img src="' . get_template_directory_uri() . '/assets/images/onefocals-logo.png" alt="OneFocals">';
+        }
+        ?>
+    </div>
+    <?php
+}
+
+/** 
+ * Edit Account: Add Custom Fields 
+ */
+add_action( 'woocommerce_edit_account_form', 'omega_add_fields_to_edit_account_form' );
+function omega_add_fields_to_edit_account_form() {
+    $user_id = get_current_user_id();
+    ?>
+    <fieldset>
+        <legend><?php esc_html_e( 'Business Details', 'woocommerce' ); ?></legend>
+        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="account_billing_company"><?php esc_html_e( 'Business Name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_billing_company" id="account_billing_company" value="<?php echo esc_attr( get_user_meta( $user_id, 'billing_company', true ) ); ?>" />
+        </p>
+
+        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="account_billing_phone"><?php esc_html_e( 'Phone Number', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+            <input type="tel" class="woocommerce-Input woocommerce-Input--text input-text" name="account_billing_phone" id="account_billing_phone" value="<?php echo esc_attr( get_user_meta( $user_id, 'billing_phone', true ) ); ?>" />
+        </p>
+
+        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="account_billing_address_1"><?php esc_html_e( 'Address', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_billing_address_1" id="account_billing_address_1" value="<?php echo esc_attr( get_user_meta( $user_id, 'billing_address_1', true ) ); ?>" />
+        </p>
+
+        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+            <label for="account_gstin_number"><?php esc_html_e( 'GSTIN Number (Optional)', 'woocommerce' ); ?></label>
+            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_gstin_number" id="account_gstin_number" value="<?php echo esc_attr( get_user_meta( $user_id, 'gstin_number', true ) ); ?>" />
+        </p>
+    </fieldset>
+    <?php
+}
+
+/** 
+ * Edit Account: Save Custom Fields 
+ */
+add_action( 'woocommerce_save_account_details', 'omega_save_fields_to_edit_account_form' );
+function omega_save_fields_to_edit_account_form( $user_id ) {
+    
+    if ( isset( $_POST['account_billing_company'] ) ) {
+        update_user_meta( $user_id, 'billing_company', sanitize_text_field( $_POST['account_billing_company'] ) );
+    }
+    if ( isset( $_POST['account_billing_phone'] ) ) {
+        update_user_meta( $user_id, 'billing_phone', sanitize_text_field( $_POST['account_billing_phone'] ) );
+    }
+    if ( isset( $_POST['account_billing_address_1'] ) ) {
+        update_user_meta( $user_id, 'billing_address_1', sanitize_text_field( $_POST['account_billing_address_1'] ) );
+    }
+    if ( isset( $_POST['account_gstin_number'] ) ) {
+        update_user_meta( $user_id, 'gstin_number', sanitize_text_field( $_POST['account_gstin_number'] ) );
+    }
+    
+}
